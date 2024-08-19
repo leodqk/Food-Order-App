@@ -27,4 +27,60 @@ const createRestaurant = async (req: Request, res: Response) => {
   }
 };
 
-export default { createRestaurant };
+const getRestaurant = async (req: Request, res: Response) => {
+  try {
+    const restaurant = await Restaurant.findOne({ user: req.userId });
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurant not found" });
+    }
+    res.json(restaurant);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+const updateRestaurant = async (req: Request, res: Response) => {
+  try {
+    const restaurant = await Restaurant.findOne({ user: req.userId });
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurant not found" });
+    }
+    const {
+      restaurantName,
+      city,
+      country,
+      deliveryPrice,
+      estimatedDeliveryTime,
+      cuisines,
+      menuItems,
+    } = req.body;
+    restaurant.restaurantName = restaurantName;
+    restaurant.city = city;
+    restaurant.country = country;
+    restaurant.deliveryPrice = deliveryPrice;
+    restaurant.estimatedDeliveryTime = estimatedDeliveryTime;
+    restaurant.cuisines = cuisines;
+    restaurant.menuItems = menuItems;
+    restaurant.lastUpdated = new Date();
+
+    if (req.file) {
+      const imageUrl = await uploadImage(req.file as Express.Multer.File);
+      restaurant.imageUrl = imageUrl;
+    }
+    await restaurant.save();
+    res.status(200).send(restaurant);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+};
+
+const uploadImage = async (file: Express.Multer.File) => {
+  const image = file;
+  const base64Image = Buffer.from(image.buffer).toString("base64");
+  const dataURI = `data:${image.mimetype};base64,${base64Image}`;
+  const uploadResponse = await cloudinary.v2.uploader.upload(dataURI);
+  return uploadResponse.url;
+};
+export default { createRestaurant, getRestaurant, updateRestaurant };
