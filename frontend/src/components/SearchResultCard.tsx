@@ -35,11 +35,11 @@ const SearchResultCard = ({ restaurant }: Props) => {
           <div className="flex gap-2 flex-col">
             <div className="flex items-center gap-1 text-green-600">
               <Clock className="text-green-600" />
-              {restaurant.estimatedDeliveryTime} mins
+              {restaurant.estimatedDeliveryTime} phút
             </div>
             <div className="flex items-center gap-1">
               <Banknote />
-              Delivery from £{(restaurant.deliveryPrice / 100).toFixed(2)}
+              Giá giao hàng từ {(restaurant.deliveryPrice / 100).toFixed(2)}K
             </div>
           </div>
         </div>

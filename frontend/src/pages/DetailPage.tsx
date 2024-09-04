@@ -1,9 +1,11 @@
 import { useGetSubRestaurant } from "@/api/subrestaurantApi";
+import CheckOutButton from "@/components/CheckOutButton";
 import MenuItemFunc from "@/components/MenuItem";
 import OrderSummary from "@/components/OrderSummary";
 import RestaurantInfo from "@/components/RestaurantInfo";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Card } from "@/components/ui/card";
+import { Card, CardFooter } from "@/components/ui/card";
+import { UserFormData } from "@/forms/user_profile_forms/UserProfileForm";
 import { MenuItem } from "@/types";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
@@ -18,7 +20,10 @@ export type CartItem = {
 const DetailPage = () => {
   const { restaurantId } = useParams();
   const { restaurant, isLoading } = useGetSubRestaurant(restaurantId);
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    const storedCartItems = sessionStorage.getItem(`catItems-${restaurantId}`);
+    return storedCartItems ? JSON.parse(storedCartItems) : [];
+  });
 
   const addToCart = (menuItem: MenuItem) => {
     setCartItems((prevCartItems) => {
@@ -46,22 +51,35 @@ const DetailPage = () => {
         ];
       }
 
+      sessionStorage.setItem(
+        `catItems-${restaurantId}`,
+        JSON.stringify(updatedCartItems)
+      );
       return updatedCartItems;
     });
   };
 
   const removeFromCart = (cartItem: CartItem) => {
     setCartItems((prevCartItems) => {
-      const updateCartItems = prevCartItems.filter(
+      const updatedCartItems = prevCartItems.filter(
         (item) => cartItem._id !== item._id
       );
 
-      return updateCartItems;
+      sessionStorage.setItem(
+        `catItems-${restaurantId}`,
+        JSON.stringify(updatedCartItems)
+      );
+
+      return updatedCartItems;
     });
   };
 
+  const onCheckOut = (userFormData: UserFormData) => {
+    console.log("onCheckOut", userFormData);
+  };
+
   if (isLoading || !restaurant) {
-    return <div>Loading...</div>;
+    return <div>Đang tải...</div>;
   }
   return (
     <div className="flex flex-col gap-10">
@@ -89,6 +107,13 @@ const DetailPage = () => {
               cartItems={cartItems}
               removeFromCart={removeFromCart}
             />
+
+            <CardFooter>
+              <CheckOutButton
+                disabled={cartItems.length === 0}
+                onCheckout={onCheckOut}
+              />
+            </CardFooter>
           </Card>
         </div>
       </div>

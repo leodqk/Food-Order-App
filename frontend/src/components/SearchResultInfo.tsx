@@ -9,15 +9,15 @@ const SearchResultInfo = ({ total, city }: Props) => {
   return (
     <div className="text-xl font-bold flex flex-col gap-3 justify-between lg:items-center lg:flex-row">
       <span>
-        {total} Restaurant found in {city}
+        Có {total} nhà hàng được tìm thấy ở{" "}
+        <span className="text-orange-500">{city}</span>
         <Link
           to="/"
-          className="ml-1 text-sm font-semibold cursor-pointer text-blue-500"
+          className="ml-3 text-sm font-semibold cursor-pointer text-blue-500"
         >
-          Change location
+          Thay đổi địa điểm
         </Link>
       </span>
-      Inser dropdown sort
     </div>
   );
 };

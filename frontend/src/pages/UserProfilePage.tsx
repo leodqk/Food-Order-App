@@ -6,11 +6,11 @@ const UserProfilePage = () => {
   const { updateUser, isLoading: isUpdateLoading } = useUpdateUser();
 
   if (isGetLoading) {
-    return <span>Loading...</span>;
+    return <span>Đang tải...</span>;
   }
 
   if (!currentUser) {
-    return <span>Unable to load user profile</span>;
+    return <span>Không thể tải thông tin</span>;
   }
 
   return (

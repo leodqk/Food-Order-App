@@ -18,10 +18,10 @@ import { ButtonLoading } from "@/components/LoadingButton";
 
 const formSchema = z.object({
   email: z.string().optional(),
-  name: z.string().min(1, "name is required"),
-  addressLine1: z.string().min(1, "Address Line 1 is required"),
-  city: z.string().min(1, "City is required"),
-  country: z.string().min(1, "Country is required"),
+  name: z.string().min(1, "Tên là bắt buôcj"),
+  addressLine1: z.string().min(1, "Địa chỉ là bắt buộc"),
+  city: z.string().min(1, "Thành phố là bắt buộc"),
+  country: z.string().min(1, "Đất nước là bắt buộc"),
 });
 
 export type UserFormData = z.infer<typeof formSchema>;
@@ -38,8 +38,8 @@ const UserProfileForm = ({
   onSave,
   isLoading,
   currentUser,
-  title = "User Profile",
-  buttonText = "Submit",
+  title = "Thông tin cá nhân",
+  buttonText = "Xác nhận",
 }: Props) => {
   const form = useForm<UserFormData>({
     resolver: zodResolver(formSchema),
@@ -58,9 +58,7 @@ const UserProfileForm = ({
       >
         <div>
           <h2 className="text-2xl font-bold">{title}</h2>
-          <FormDescription>
-            View and change your profile information here
-          </FormDescription>
+          <FormDescription>Xem và thay đổi thông tin tại đây</FormDescription>
         </div>
         <FormField
           control={form.control}
@@ -80,7 +78,7 @@ const UserProfileForm = ({
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Tên của bạn</FormLabel>
               <FormControl>
                 <Input {...field} className="bg-white" />
               </FormControl>
@@ -95,7 +93,7 @@ const UserProfileForm = ({
             name="addressLine1"
             render={({ field }) => (
               <FormItem className="flex-1">
-                <FormLabel>Address Line 1</FormLabel>
+                <FormLabel>Địa chỉ</FormLabel>
                 <FormControl>
                   <Input {...field} className="bg-white" />
                 </FormControl>
@@ -108,7 +106,7 @@ const UserProfileForm = ({
             name="city"
             render={({ field }) => (
               <FormItem className="flex-1">
-                <FormLabel>City</FormLabel>
+                <FormLabel>Thành phố</FormLabel>
                 <FormControl>
                   <Input {...field} className="bg-white" />
                 </FormControl>
@@ -121,7 +119,7 @@ const UserProfileForm = ({
             name="country"
             render={({ field }) => (
               <FormItem className="flex-1">
-                <FormLabel>Country</FormLabel>
+                <FormLabel>Đất nước</FormLabel>
                 <FormControl>
                   <Input {...field} className="bg-white" />
                 </FormControl>

@@ -10,25 +10,25 @@ const MobileNavLinks = () => {
         to="/order-status"
         className="flex bg-white items-center font-bold hover:text-orange-500"
       >
-        Order Status
+        Đơn hàng
       </Link>
       <Link
         to="/manage-restaurant"
         className="flex bg-white items-center font-bold hover:text-orange-500"
       >
-        My Restaurant
+        Nhà hàng của tôi
       </Link>
       <Link
         to="/user-profile"
         className="flex bg-white items-center font-bold hover:text-orange-500"
       >
-        User Profile
+        Thông tin cá nhân
       </Link>
       <Button
         onClick={() => logout()}
         className="flex items-center px-3 font-bold hover:bg-gray-500"
       >
-        Log Out
+        Đăng xuất
       </Button>
     </>
   );

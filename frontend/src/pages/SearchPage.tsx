@@ -69,11 +69,11 @@ const SearchPage = () => {
   };
 
   if (isLoading) {
-    <span>Loading ...</span>;
+    <span>Đang tải ...</span>;
   }
 
   if (!results?.data || !city) {
-    return <span>No results found</span>;
+    return <span>Không tìm thấy kết quả</span>;
   }
 
   return (

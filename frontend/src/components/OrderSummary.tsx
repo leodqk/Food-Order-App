@@ -27,8 +27,8 @@ const OrderSummary = ({ restaurant, cartItems, removeFromCart }: Props) => {
     <>
       <CardHeader>
         <CardTitle className="text-2xl font-bold tracking-tight flex justify-between">
-          <span>Your Order</span>
-          <span>£{getTotalCost()}</span>
+          <span>Đơn hàng của bạn</span>
+          <span>{getTotalCost()}K</span>
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-5">
@@ -47,14 +47,14 @@ const OrderSummary = ({ restaurant, cartItems, removeFromCart }: Props) => {
                 size={20}
                 onClick={() => removeFromCart(item)}
               />
-              £{((item.price * item.quantity) / 100).toFixed(2)}
+              {((item.price * item.quantity) / 100).toFixed(2)}K
             </span>
           </div>
         ))}
         <Separator />
         <div className="flex justify-between">
-          <span>Delivery</span>
-          <span>£{(restaurant.deliveryPrice / 100).toFixed(2)}</span>
+          <span>Phí giao hàng</span>
+          <span>{(restaurant.deliveryPrice / 100).toFixed(2)} K</span>
         </div>
         <Separator />
       </CardContent>
